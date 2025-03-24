@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portal de servicios de salud en línea">
+    <title>Portal de Servicios de Salud</title>
+    <style>
+        :root {
+            --color-primary: #1976D2;
+            --color-primary-dark: #0D47A1;
+            --color-primary-light: #90CAF9;
+            --color-background: #E3F2FD;
+            --color-card: #BBDEFB;
+            --color-text: #0D47A1;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.4;
+            animation: fadeIn 1.5s ease-in-out;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px 10px;
+            height: calc(100vh - 110px);
+            overflow: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--color-primary-light);
+            box-shadow: var(--shadow);
+            position: relative;
+            height: 60px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .logo {
+            width: 40px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        h1 {
+            color: var(--color-primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+            animation: slideDown 1s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            height: calc(100% - 50px);
+        }
+
+        .service {
+            background-color: var(--color-card);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service:hover {
+            transform: translateY(-5px);
+            background-color: var(--color-primary-light);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .service-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .service-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .service-description {
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .service-button {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .service-button:hover {
+            background-color: var(--color-primary-dark);
+            transform: scale(1.05);
+        }
+
+        .service-button:focus {
+            outline: 3px solid var(--color-primary-dark);
+            outline-offset: 3px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.8rem;
+            color: var(--color-primary-dark);
+            background-color: var(--color-primary-light);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .services {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+            }
+            
+            .container {
+                height: auto;
+                overflow-y: auto;
+            }
+            
+            .services {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+            
+            footer {
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="UTH-removebg-preview (1).png" alt="Logo UTH" class="logo">
+            <h2>Portal de Salud</h2>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Servicios de Salud en Línea</h1>
+        
+        <div class="services">
+            <div class="service">
+                <div>
+                    <div class="service-icon">📄</div>
+                    <div class="service-title">Perfil de Usuario</div>
+                    <p class="service-description">Administra tu información personal</p>
+                </div>
+                <a href="prueba.html" class="service-button" aria-label="Acceder a perfil de usuario">Ver</a>
+            </div>
+            
+            <div class="service">
+                <div>
+                    <div class="service-icon">💬</div>
+                    <div class="service-title">Chat con Médicos</div>
+                    <p class="service-description">Consulta en tiempo real</p>
+                </div>
+                <a href="medicos.html" class="service-button" aria-label="Iniciar chat con médicos">Chatear</a>
+            </div>
+            
+            <div class="service">
+                <div>
+                    <div class="service-icon">🤖</div>
+                    <div class="service-title">Asistente de IA</div>
+                    <p class="service-description">Resuelve dudas básicas</p>
+                </div>
+                <a href="asistente.html" class="service-button" aria-label="Consultar al asistente de IA">Consultar</a>
+            </div>
+            
+            <div class="service">
+                <div>
+                    <div class="service-icon">📅</div>
+                    <div class="service-title">Gestión de Citas</div>
+                    <p class="service-description">Programa tus citas médicas</p>
+                </div>
+                <a href="gestion.html" class="service-button" aria-label="Gestionar citas médicas">Agendar</a>
+            </div>
+            
+            <div class="service">
+                <div>
+                    <div class="service-icon">📜</div>
+                    <div class="service-title">Historia Clínica</div>
+                    <p class="service-description">Tu historial médico completo</p>
+                </div>
+                <a href="historia.html" class="service-button" aria-label="Ver historia clínica">Ver</a>
+            </div>
+            
+            <div class="service">
+                <div>
+                    <div class="service-icon">💊</div>
+                    <div class="service-title">Medicamentos</div>
+                    <p class="service-description">Base de datos médica</p>
+                </div>
+                <a href="base-LAPTOP-JERBIN-ALEXIS.html" class="service-button" aria-label="Explorar base de datos de medicamentos">Explorar</a>
+            </div>
+            
+            <div class="service">
+                <div>
+                    <div class="service-icon">💳</div>
+                    <div class="service-title">Pagos en Línea</div>
+                    <p class="service-description">Pagos seguros de servicios</p>
+                </div>
+                <a href="pago.html" class="service-button" aria-label="Realizar pagos en línea">Pagar</a>
+            </div>
+            
+            <div class="service">
+                <div>
+                    <div class="service-icon">📊</div>
+                    <div class="service-title">Administración</div>
+                    <p class="service-description">Panel de control</p>
+                </div>
+                <a href="administracion.html" class="service-button" aria-label="Acceder al panel de administración">Acceder</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Portal de Servicios de Salud</p>
+    </footer>
+
+</body>
+</html>

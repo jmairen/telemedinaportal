@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Información sobre telemedicina ">
+    <title>Historia Clínica - Telemedicina</title>
+    <style>
+        :root {
+            --color-primary: #1976D2;
+            --color-primary-dark: #0D47A1;
+            --color-primary-light: #90CAF9;
+            --color-background: #E3F2FD;
+            --color-card: #BBDEFB;
+            --color-text: #0D47A1;
+            --color-accent: #2196F3;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            animation: fadeIn 1s ease-in-out;
+            height: 100vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--color-primary-light);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .back-button {
+            padding: 5px 10px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .back-button:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .telemedicina-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .telemedicina-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--color-accent);
+        }
+
+        h1 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--color-accent);
+        }
+
+        h2 {
+            color: var(--color-primary-dark);
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .definition-box {
+            border-left: 3px solid var(--color-primary);
+            padding-left: 15px;
+            margin: 20px 0;
+            background-color: var(--color-primary-light);
+            padding: 15px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .services-list {
+            list-style-type: none;
+            margin: 15px 0;
+        }
+
+        .services-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .services-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .benefits-box {
+            background-color: #E1F5FE;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #B3E5FC;
+        }
+
+        .benefits-list {
+            list-style-type: none;
+            margin: 15px 0;
+        }
+
+        .benefits-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .benefits-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00C853;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #FFECB3;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .telemedicine-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.8rem;
+            color: var(--color-primary-dark);
+            background-color: var(--color-card);
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="UTH.jpg" alt="Logo UTH" class="logo">
+            <h3>Historia Clínica</h3>
+        </div>
+        <a href="portal.html" class="back-button">← Volver al portal</a>
+    </header>
+
+    <div class="container">
+        <div class="telemedicina-card">
+            <h1>¿Qué es la telemedicina? </h1>
+            
+            <img class="telemedicine-image" src="portal-telemedicina.png" alt="Imagen ilustrativa de telemedicina">
+            
+            <div class="definition-box">
+                <p>La <span class="highlight">telemedicina</span> es el uso de la tecnología que permite a un paciente tener citas médicas (o visitas) con su médico u otro miembro de su equipo via virtual desde su dispositivo electrónico. Se puede utilizar cuando el paciente y su médico no están en el mismo lugar.</p>
+            </div>
+            
+            <p>La telemedicina utiliza la tecnología para ayudar al médico a "ver" cuando usted tiene un problema de salud que necesita atención. Por ejemplo, la telemedicina se puede usar si tiene diabetes o hipertensión arterial, o si está recibiendo un medicamento o tratamiento que podría causar efectos secundarios.</p>
+            
+            <p>La telemedicina puede ser útil porque es posible que no necesite salir de su casa para que le examinen o que no tenga que viajar si vive lejos de un médico. Es posible que el médico se refiera a la telemedicina como tener una <span class="highlight">visita virtual</span> con usted.</p>
+
+            <h2>Telemedicina vs. Telesalud</h2>
+            <p>La telemedicina es solo una parte de los servicios de telesalud. Aunque la telemedicina se centra en la atención médica (a menudo proporcionada por un médico o enfermera con licencia para ejercer la medicina), la telesalud utiliza la misma tecnología para proporcionar una mayor variedad de servicios de salud de una gama más amplia de proveedores.</p>
+            
+            <h2>Servicios de Telemedicina en tegucigalpa</h2>
+            <p>Nuestro portal cuenta con los siguientes servicios de Telemedicina:</p>
+            
+            <ul class="services-list">
+                <li>Orientaciones para pacientes y cuidadores sobre un nuevo diagnóstico y tratamiento</li>
+                <li>Ofrecer ayuda y consejos para mantenerse bien y sano</li>
+                <li>Atención médica en general (p. ej., visitas de rutina, control de la presión arterial, consejos sobre ciertas enfermedades no urgentes, como sarpullidos comunes)</li>
+                <li>Orientación sobre cambios de estilo de vida y signos de alarma</li>
+            </ul>
+
+            <div class="benefits-box">
+                <h2>¿Cuáles son los beneficios de la telemedicina?</h2>
+                <ul class="benefits-list">
+                    <li>Le permite hablar con su médico en vivo por teléfono o videochat</li>
+                    <li>Le permite enviar mensajes y recibir mensajes de su médico usando mensajes de chat o correo electrónico</li>
+                    <li>Permite el monitoreo remoto de pacientes</li>
+                    <li>Ahorra tiempo y costos de transporte</li>
+                    <li>Reduce el tiempo de espera para recibir servicios</li>
+                    <li>Reduce la cantidad de visitas a centros médicos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; </p>
+    </footer>
+</body>
+</html>

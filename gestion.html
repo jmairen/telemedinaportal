@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa; /* Azul claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 450px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1976d2; /* Azul más intenso para el título */
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #b3e5fc; /* Borde azul claro */
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        textarea:focus {
+            border-color: #03a9f4; /* Borde azul más oscuro al enfocar */
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #03a9f4; /* Azul para el botón */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0288d1; /* Azul más oscuro al pasar el ratón */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Agendar Cita Médica</h1>
+        <form id="agendarCita">
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+
+            <label for="fecha">Fecha de la Cita:</label><br>
+            <input type="date" id="fecha" name="fecha" required><br><br>
+
+            <label for="hora">Hora de la Cita:</label><br>
+            <input type="time" id="hora" name="hora" required><br><br>
+
+            <label for="mensaje">Mensaje Adicional:</label><br>
+            <textarea id="mensaje" name="mensaje"></textarea><br><br>
+
+            <button type="button" onclick="enviarCita()">Enviar Cita</button>
+        </form>
+    </div>
+
+    <script>
+        function enviarCita() {
+            var nombre = document.getElementById("nombre").value;
+            var fecha = document.getElementById("fecha").value;
+            var hora = document.getElementById("hora").value;
+            var mensaje = document.getElementById("mensaje").value;
+
+            var texto = `Hola, quiero agendar una cita con el médico.\nNombre: ${nombre}\nFecha: ${fecha}\nHora: ${hora}\nMensaje: ${mensaje}`;
+            var enlaceWhatsapp = `https://wa.me/92663983?text=${encodeURIComponent(texto)}`;
+            
+            window.open(enlaceWhatsapp, "_blank");
+        }
+    </script>
+</body>
+</html>

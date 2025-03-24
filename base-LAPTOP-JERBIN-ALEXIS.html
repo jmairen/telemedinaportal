@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Medicamentos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .search-container {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .search-input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+        }
+        .search-input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .med-list {
+            list-style: none;
+            padding: 0;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            margin: 0;
+        }
+        .med-list li {
+            padding: 10px;
+            background: #e3f2fd;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+            text-align: left;
+        }
+        .med-list li:hover {
+            background: #bbdefb;
+        }
+        .highlight {
+            background: #90caf9 !important;
+            font-weight: bold;
+        }
+        .med-details {
+            margin-top: 20px;
+            display: none;
+            text-align: left;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .no-results {
+            display: none;
+            color: red;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .header {
+            color: #0066cc;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="header">Lista de Medicamentos</h2>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Buscar medicamento..." onkeyup="filterMedicamentos()">
+        </div>
+        
+        <p class="no-results" id="noResults">No se encontraron resultados</p>
+        <ul class="med-list" id="medList"></ul>
+        
+        <div class="med-details" id="medDetails">
+            <h3 id="medName"></h3>
+            <p id="medDesc"></p>
+            <p><strong>Clasificación:</strong> <span id="medClasificacion"></span></p>
+            <p><strong>Venta:</strong> <span id="medVenta"></span></p>
+            <p><strong>Dosis habitual:</strong> <span id="medDosis"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de medicamentos
+        const medicamentos = {};
+        
+        // Información detallada por categoría de medicamentos
+        const categoriaMedicamentos = {
+            "analgésicos": {
+                desc: "Medicamento utilizado para aliviar el dolor de leve a moderado.",
+                dosis: "Según indicación médica, generalmente cada 6-8 horas."
+            },
+            "antibióticos": {
+                desc: "Medicamento utilizado para tratar infecciones bacterianas.",
+                dosis: "Según indicación médica, generalmente durante 7-14 días."
+            },
+            "antidiabéticos": {
+                desc: "Medicamento utilizado para controlar los niveles de glucosa en sangre.",
+                dosis: "Según indicación médica, ajustado al control glucémico del paciente."
+            },
+            "antialérgicos": {
+                desc: "Medicamento utilizado para tratar síntomas de alergia.",
+                dosis: "Según indicación médica, generalmente 1 vez al día."
+            },
+            "gastroenterológicos": {
+                desc: "Medicamento utilizado para tratar problemas gastrointestinales.",
+                dosis: "Según indicación médica, generalmente antes o después de las comidas."
+            },
+            "cardiovasculares": {
+                desc: "Medicamento utilizado para tratar problemas del sistema cardiovascular.",
+                dosis: "Según indicación médica, generalmente 1-2 veces al día."
+            },
+            "respiratorios": {
+                desc: "Medicamento utilizado para tratar problemas respiratorios.",
+                dosis: "Según indicación médica, generalmente en casos de crisis o a horarios."
+            },
+            "sistema nervioso": {
+                desc: "Medicamento utilizado para tratar trastornos del sistema nervioso.",
+                dosis: "Según indicación médica, con ajuste gradual de dosis."
+            }
+        };
+        
+        // Clasificación de medicamentos por categoría
+        const clasificacionMedicamentos = {
+            "Paracetamol": "analgésicos",
+            "Ibuprofeno": "analgésicos",
+            "Aspirina": "analgésicos",
+            "Diclofenaco": "analgésicos",
+            "Naproxeno": "analgésicos",
+            "Meloxicam": "analgésicos",
+            "Tramadol": "analgésicos",
+            "Morfina": "analgésicos",
+            "Oxicodona": "analgésicos",
+            "Hidrocodona": "analgésicos",
+            "Codeína": "analgésicos",
+            "Fentanilo": "analgésicos",
+            
+            "Amoxicilina": "antibióticos",
+            "Cefalexina": "antibióticos",
+            "Sulfametoxazol/Trimetoprim": "antibióticos",
+            "Metronidazol": "antibióticos",
+            "Aciclovir": "antibióticos",
+            "Oseltamivir": "antibióticos",
+            
+            "Metformina": "antidiabéticos",
+            "Insulina": "antidiabéticos",
+            "Glibenclamida": "antidiabéticos",
+            "Gliclazida": "antidiabéticos",
+            "Pioglitazona": "antidiabéticos",
+            "Sitagliptina": "antidiabéticos",
+            "Vildagliptina": "antidiabéticos",
+            "Linagliptina": "antidiabéticos",
+            "Liraglutida": "antidiabéticos",
+            "Exenatida": "antidiabéticos",
+            "Dulaglutida": "antidiabéticos",
+            "Lixisenatida": "antidiabéticos",
+            "Insulina glargina": "antidiabéticos",
+            "Insulina lispro": "antidiabéticos",
+            "Insulina aspart": "antidiabéticos",
+            "Insulina detemir": "antidiabéticos",
+            "Insulina degludec": "antidiabéticos",
+            
+            "Loratadina": "antialérgicos",
+            "Cetirizina": "antialérgicos",
+            "Difenhidramina": "antialérgicos",
+            "Clemastina": "antialérgicos",
+            "Meclizina": "antialérgicos",
+            "Dimenhidrinato": "antialérgicos",
+            "Prometazina": "antialérgicos",
+            "Feniramina": "antialérgicos",
+            "Hidroxicina": "antialérgicos",
+            "Levocetirizina": "antialérgicos",
+            "Desloratadina": "antialérgicos",
+            "Fexofenadina": "antialérgicos",
+            "Clorfenamina": "antialérgicos",
+            
+            "Omeprazol": "gastroenterológicos",
+            "Esomeprazol": "gastroenterológicos",
+            "Lansoprazol": "gastroenterológicos",
+            "Ranitidina": "gastroenterológicos",
+            "Famotidina": "gastroenterológicos",
+            "Cimetidina": "gastroenterológicos",
+            "Nizatidina": "gastroenterológicos",
+            "Misoprostol": "gastroenterológicos",
+            "Sucralfato": "gastroenterológicos",
+            "Loperamida": "gastroenterológicos",
+            "Bisacodilo": "gastroenterológicos",
+            "Senósidos": "gastroenterológicos",
+            "Lactulosa": "gastroenterológicos",
+            "Polyethylene glycol (PEG)": "gastroenterológicos",
+            "Metoclopramida": "gastroenterológicos",
+            "Ondansetrón": "gastroenterológicos",
+            
+            "Atorvastatina": "cardiovasculares",
+            "Losartán": "cardiovasculares",
+            "Simvastatina": "cardiovasculares",
+            "Clopidogrel": "cardiovasculares",
+            "Captopril": "cardiovasculares",
+            "Furosemida": "cardiovasculares",
+            "Nitroglicerina": "cardiovasculares",
+            "Enalapril": "cardiovasculares",
+            "Amlodipino": "cardiovasculares",
+            "Doxazosina": "cardiovasculares",
+            "Propranolol": "cardiovasculares",
+            "Atenolol": "cardiovasculares",
+            
+            "Salbutamol": "respiratorios",
+            "Benzonatato": "respiratorios",
+            "Montelukast": "respiratorios",
+            "Dextrometorfano": "respiratorios",
+            "Bromuro de ipratropio": "respiratorios",
+            "Tiotropio": "respiratorios",
+            "Fluticasona": "respiratorios",
+            "Budesonida": "respiratorios",
+            "Beclometasona": "respiratorios",
+            "Mometasona": "respiratorios",
+            "Ciclesonida": "respiratorios",
+            "Formoterol": "respiratorios",
+            "Salmeterol": "respiratorios",
+            "Theophylline": "respiratorios",
+            "Zafirlukast": "respiratorios",
+            "Omalizumab": "respiratorios",
+            "Mepolizumab": "respiratorios",
+            "Reslizumab": "respiratorios",
+            "Benralizumab": "respiratorios",
+            "Dupilumab": "respiratorios",
+            "Epinefrina": "respiratorios",
+            
+            "Levotiroxina": "sistema nervioso",
+            "Prednisona": "sistema nervioso",
+            "Hidroxicloroquina": "sistema nervioso",
+            "Carbamazepina": "sistema nervioso",
+            "Clonazepam": "sistema nervioso",
+            "Diazepam": "sistema nervioso",
+            "Lorazepam": "sistema nervioso",
+            "Fenitoína": "sistema nervioso",
+            "Duloxetina": "sistema nervioso",
+            "Sertralina": "sistema nervioso",
+            "Fluoxetina": "sistema nervioso",
+            "Escitalopram": "sistema nervioso",
+            "Citalopram": "sistema nervioso",
+            "Venlafaxina": "sistema nervioso",
+            "Trazodona": "sistema nervioso",
+            "Mirtazapina": "sistema nervioso",
+            "Bupropión": "sistema nervioso",
+            "Risperidona": "sistema nervioso",
+            "Quetiapina": "sistema nervioso",
+            "Olanzapina": "sistema nervioso",
+            "Clozapina": "sistema nervioso",
+            "Aripiprazol": "sistema nervioso",
+            "Haloperidol": "sistema nervioso",
+            "Ziprasidona": "sistema nervioso",
+            "Lamotrigina": "sistema nervioso",
+            "Valproato": "sistema nervioso",
+            "Topiramato": "sistema nervioso",
+            "Gabapentina": "sistema nervioso",
+            "Pregabalina": "sistema nervioso",
+            "Metadona": "sistema nervioso",
+            "Buprenorfina": "sistema nervioso",
+            "Naltrexona": "sistema nervioso",
+            "Disulfiram": "sistema nervioso",
+            "Acamprosato": "sistema nervioso",
+            "Betametasona": "sistema nervioso"
+        };
+        
+        // Lista completa de medicamentos
+        const nombresMedicamentos = [
+            "Paracetamol", "Ibuprofeno", "Amoxicilina", "Metformina", "Loratadina", "Omeprazol", "Atorvastatina", "Losartán", "Simvastatina", "Salbutamol",
+            "Aspirina", "Clopidogrel", "Captopril", "Furosemida", "Levotiroxina", "Metronidazol", "Prednisona", "Cefalexina", "Hidroxicloroquina", "Insulina",
+            "Nitroglicerina", "Benzonatato", "Montelukast", "Dextrometorfano", "Enalapril", "Amlodipino", "Doxazosina", "Esomeprazol", "Clorfenamina", "Glibenclamida",
+            "Sulfametoxazol/Trimetoprim", "Diclofenaco", "Carbamazepina", "Ranitidina", "Clonazepam", "Diazepam", "Lansoprazol", "Meloxicam", "Naproxeno",
+            "Aciclovir", "Oseltamivir", "Betametasona", "Lorazepam", "Fenitoína", "Metoclopramida", "Ondansetrón", "Propranolol", "Atenolol", "Duloxetina",
+            "Sertralina", "Fluoxetina", "Escitalopram", "Citalopram", "Venlafaxina", "Trazodona", "Mirtazapina", "Bupropión", "Risperidona", "Quetiapina",
+            "Olanzapina", "Clozapina", "Aripiprazol", "Haloperidol", "Ziprasidona", "Lamotrigina", "Valproato", "Topiramato", "Gabapentina", "Pregabalina",
+            "Fentanilo", "Morfina", "Oxicodona", "Hidrocodona", "Codeína", "Tramadol", "Metadona", "Buprenorfina", "Naltrexona", "Disulfiram", "Acamprosato",
+            "Loperamida", "Bisacodilo", "Senósidos", "Lactulosa", "Polyethylene glycol (PEG)", "Bromuro de ipratropio", "Tiotropio", "Fluticasona", "Budesonida", "Beclometasona",
+            "Mometasona", "Ciclesonida", "Formoterol", "Salmeterol", "Theophylline", "Zafirlukast", "Omalizumab", "Mepolizumab", "Reslizumab",
+            "Benralizumab", "Dupilumab", "Epinefrina", "Difenhidramina", "Clemastina", "Meclizina", "Dimenhidrinato", "Prometazina", "Feniramina", "Hidroxicina",
+            "Levocetirizina", "Desloratadina", "Fexofenadina", "Cetirizina", "Famotidina", "Cimetidina", "Nizatidina", "Misoprostol", "Sucralfato", "Gliclazida",
+            "Pioglitazona", "Sitagliptina", "Vildagliptina", "Linagliptina", "Liraglutida", "Exenatida", "Dulaglutida", "Lixisenatida", "Insulina glargina",
+            "Insulina lispro", "Insulina aspart", "Insulina detemir", "Insulina degludec", "Alopurinol", "Febuxostat", "Colchicina", "Metotrexato", "Ciclosporina"
+        ];
+
+        // Generar la información detallada para cada medicamento
+        nombresMedicamentos.forEach(nombre => {
+            const categoria = clasificacionMedicamentos[nombre] || "otros";
+            const info = categoriaMedicamentos[categoria] || {
+                desc: "Medicamento utilizado para tratar diversas condiciones.",
+                dosis: "Según indicación médica."
+            };
+            
+            medicamentos[nombre] = {
+                desc: info.desc,
+                clasificacion: categoria,
+                venta: Math.random() > 0.5 ? "Venta libre" : "Solo con receta médica",
+                dosis: info.dosis
+            };
+        });
+
+        // Poblar la lista de medicamentos
+        const medList = document.getElementById("medList");
+        nombresMedicamentos.sort().forEach(nombre => {
+            let li = document.createElement("li");
+            li.textContent = nombre;
+            li.onclick = () => showDetails(nombre);
+            medList.appendChild(li);
+        });
+        
+        // Mostrar detalles del medicamento seleccionado
+        function showDetails(medName) {
+            const med = medicamentos[medName];
+            document.getElementById("medName").textContent = medName;
+            document.getElementById("medDesc").textContent = med.desc;
+            document.getElementById("medClasificacion").textContent = med.clasificacion.charAt(0).toUpperCase() + med.clasificacion.slice(1);
+            document.getElementById("medVenta").textContent = med.venta;
+            document.getElementById("medDosis").textContent = med.dosis;
+            document.getElementById("medDetails").style.display = "block";
+        }
+
+        // Filtrar medicamentos según la búsqueda
+        function filterMedicamentos() {
+            const filter = document.getElementById("searchInput").value.toLowerCase();
+            const lis = medList.getElementsByTagName("li");
+            let hasResults = false;
+
+            for (let i = 0; i < lis.length; i++) {
+                const txtValue = lis[i].textContent || lis[i].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    lis[i].style.display = "";
+                    lis[i].classList.add("highlight");
+                    hasResults = true;
+                } else {
+                    lis[i].style.display = "none";
+                    lis[i].classList.remove("highlight");
+                }
+            }
+
+            document.getElementById("noResults").style.display = hasResults ? "none" : "block";
+            
+            // Ocultar detalles cuando se realiza una nueva búsqueda
+            if (filter.length > 0) {
+                document.getElementById("medDetails").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
