@@ -43,8 +43,14 @@
             border-radius: 5px;
             margin: 5px 0;
         }
+        .login-btn {
+            background: #1976D2;
+        }
+        .bypass-btn {
+            background: #4CAF50;
+        }
         button:hover {
-            background: #1565C0;
+            opacity: 0.9;
         }
         .error {
             color: red;
@@ -58,14 +64,17 @@
         <h2>Iniciar Sesión</h2>
         <input type="text" id="username" placeholder="Usuario">
         <input type="password" id="password" placeholder="Contraseña">
-        <button id="loginBtn">Ingresar</button>
+        <button id="loginBtn" class="login-btn">Ingresar</button>
+        <button id="bypassBtn" class="bypass-btn">Entrar sin contraseña</button>
         <p id="error" class="error">Usuario o contraseña incorrectos</p>
     </div>
 
     <script>
         const loginBtn = document.getElementById("loginBtn");
+        const bypassBtn = document.getElementById("bypassBtn");
 
         if (loginBtn) loginBtn.addEventListener("click", login);
+        if (bypassBtn) bypassBtn.addEventListener("click", bypassLogin);
 
         // Agregar evento de presionar Enter para ejecutar login
         document.getElementById("username").addEventListener("keypress", function(event) {
@@ -118,6 +127,11 @@
                 document.getElementById("error").textContent = "Usuario o contraseña incorrectos";
                 document.getElementById("error").style.display = "block";
             }
+        }
+
+        function bypassLogin() {
+            // Bypass login and go directly to portal
+            window.location.href = "portal.html";
         }
     </script>
 </body>
