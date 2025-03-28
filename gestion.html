@@ -13,25 +13,28 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 15px;
         }
 
         .container {
             background-color: #ffffff;
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 450px;
+            width: 400px;
+            max-width: 100%;
         }
 
         h1 {
             text-align: center;
-            color: #1976d2; /* Azul más intenso para el título */
-            margin-bottom: 25px;
+            color: #19bdd2; /* Azul más intenso para el título */
+            margin-bottom: 15px;
+            font-size: 1.6em;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             color: #333;
             font-weight: 600;
         }
@@ -40,9 +43,9 @@
         input[type="date"],
         input[type="time"],
         textarea {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 20px;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
             border: 2px solid #b3e5fc; /* Borde azul claro */
             border-radius: 6px;
             box-sizing: border-box;
@@ -59,6 +62,8 @@
 
         textarea {
             resize: vertical;
+            min-height: 80px;
+            max-height: 150px;
         }
 
         button {
@@ -76,23 +81,30 @@
         button:hover {
             background-color: #0288d1; /* Azul más oscuro al pasar el ratón */
         }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Agendar Cita Médica</h1>
         <form id="agendarCita">
-            <label for="nombre">Nombre:</label><br>
-            <input type="text" id="nombre" name="nombre" required><br><br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
 
-            <label for="fecha">Fecha de la Cita:</label><br>
-            <input type="date" id="fecha" name="fecha" required><br><br>
+            <label for="fecha">Fecha de la Cita:</label>
+            <input type="date" id="fecha" name="fecha" required>
 
-            <label for="hora">Hora de la Cita:</label><br>
-            <input type="time" id="hora" name="hora" required><br><br>
+            <label for="hora">Hora de la Cita:</label>
+            <input type="time" id="hora" name="hora" required>
 
-            <label for="mensaje">Mensaje Adicional:</label><br>
-            <textarea id="mensaje" name="mensaje"></textarea><br><br>
+            <label for="mensaje">Mensaje Adicional:</label>
+            <textarea id="mensaje" name="mensaje"></textarea>
 
             <button type="button" onclick="enviarCita()">Enviar Cita</button>
         </form>
