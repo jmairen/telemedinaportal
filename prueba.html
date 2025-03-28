@@ -17,34 +17,37 @@
 
         .container {
             background-color: #ffffff;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 450px;
+            width: 350px;
         }
 
         h1 {
             text-align: center;
             color: #1976d2;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             color: #333;
             font-weight: 600;
+            font-size: 0.9em;
         }
 
         input[type="text"],
         input[type="email"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 20px;
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
             border: 2px solid #b3e5fc;
             border-radius: 6px;
             box-sizing: border-box;
             transition: border-color 0.3s ease;
+            font-size: 0.9em;
         }
 
         input[type="text"]:focus,
@@ -56,12 +59,12 @@
         button {
             background-color: #03a9f4;
             color: white;
-            padding: 12px 20px;
+            padding: 10px 15px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
-            font-size: 16px;
+            font-size: 0.9em;
             transition: background-color 0.3s ease;
         }
 
@@ -74,17 +77,17 @@
     <div class="container">
         <h1>Perfil de Usuario</h1>
         <form id="crearUsuario">
-            <label for="nombre">Nombre:</label><br>
-            <input type="text" id="nombre" name="nombre" required><br><br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
 
-            <label for="apellido">Apellido:</label><br>
-            <input type="text" id="apellido" name="apellido" required><br><br>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required>
 
-            <label for="correo">Correo Electrónico:</label><br>
-            <input type="email" id="correo" name="correo" required><br><br>
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
 
-            <label for="usuario">Nombre de Usuario:</label><br>
-            <input type="text" id="usuario" name="usuario" required><br><br>
+            <label for="usuario">Nombre de Usuario:</label>
+            <input type="text" id="usuario" name="usuario" required>
 
             <button type="button" onclick="enviarWhatsApp()">Crear Usuario y Enviar por WhatsApp</button>
         </form>
